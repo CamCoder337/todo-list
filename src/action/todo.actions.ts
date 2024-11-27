@@ -25,6 +25,17 @@ export async function findAllTodos(endpoint: string): Promise<Todo[]> {
         });
 }
 
+export async function updateATodo(endpoint:string, todoToUpdate:Todo) : Promise<Todo> {
+    return await axios
+        .put(endpoint, todoToUpdate)
+        .then((result)=>{
+            return result.data as Todo;
+        }).catch((error)=>{
+            console.error(error);
+            throw error
+        })
+}
+
 export async function findATodoById(endpoint: string,todoId:string): Promise<Todo> {
     return await axios
         .get(endpoint + `/${todoId}`)
