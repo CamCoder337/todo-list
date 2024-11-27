@@ -4,48 +4,52 @@ import {deleteATodoById, findAllTodos, findATodoById, saveATodo} from "@/src/act
 import {TodoError} from "@/src/exception/todo.exceptions";
 import {APIException} from "@/src/exception/api.exception";
 
-const service_endpoint:string = process.env.api_url + "/v1/todos"
+const service_endpoint:string = "http://localhost:8081/api" + "/v1/todos"
 export const  TodoService = {
-    createATodo: async function(todo:TodoCreate) : Promise<Todo|TodoError> {
+    createATodo: async function(todo:TodoCreate) : Promise<Todo> {
         try{
             return await saveATodo(service_endpoint, todo);
         }catch(e){
             if(e instanceof AxiosError){
-                return e as APIException;
+                throw e as APIException;
             }
-            return e as TodoError
+            throw e as TodoError
         }
     },
 
-    getAllTodos: async function(): Promise<Todo[]|TodoError> {
+    getAllTodos: async function(): Promise<Todo[]> {
         try{
             return  await findAllTodos(service_endpoint);
         }catch(e){
             if(e instanceof AxiosError){
-                return e as APIException;
+                throw e as APIException;
             }
-            return e as TodoError
+            throw e as TodoError
         }
     },
-    getATodo: async function(todoId:string): Promise<Todo|TodoError> {
+    getATodo: async function(todoId:string): Promise<Todo> {
         try{
             return await findATodoById(service_endpoint, todoId);
         }catch(e){
             if(e instanceof AxiosError){
-                return e as APIException;
+                throw e as APIException;
             }
-            return e as TodoError
+            throw e as TodoError
         }
     },
 
-    async deleteATodo(todoId:string) : Promise<void|TodoError> {
+    updateATodo: async function(todo:Todo) : Promise<Todo> {
+        return await saveATodo(service_endpoint, todo);
+    },
+
+    async deleteATodo(todoId:string) : Promise<void> {
         try{
             await deleteATodoById(service_endpoint, todoId);
         }catch(e){
             if(e instanceof AxiosError){
-                return e as APIException;
+                throw e as APIException;
             }
-            return e as TodoError
+            throw e as TodoError
         }
     }
 }
