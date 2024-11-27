@@ -9,8 +9,6 @@ import { Textarea } from "@/src/components/ui/textarea"
 import {TodoService} from "@/src/service/TodoService";
 import {TodoError} from "@/src/exception/todo.exceptions";
 
-const API_URL = 'https://api.example.com/todos' // Remplacez ceci par l'URL de votre API
-
 export default function TodoList() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [newTodo, setNewTodo] = useState({ title: '', description: '' })
@@ -31,9 +29,9 @@ export default function TodoList() {
 
   const createTodo = async () => {
     try{
-      const todo = { ...newTodo, status: 'TODO', priority: todos.length } as TodoCreate
-      const response = await TodoService.createATodo(todo)
-      setTodos([...todos, response])
+      const todoToCreate = { ...newTodo, status: 'TODO', priority: todos.length } as TodoCreate
+      const createdTodo = await TodoService.createATodo(todoToCreate)
+      setTodos([...todos, createdTodo])
       setNewTodo({ title: '', description: '' })
     }catch(e){
       const error = e as TodoError;
@@ -41,17 +39,13 @@ export default function TodoList() {
     }
   }
 
-  const updateTodo = async (updatedTodo: Todo) => {
+  const updateTodo = async (todoToUpdate: Todo) => {
     try {
-      const response = await fetch(`${API_URL}/${updatedTodo.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedTodo)
-      })
-      const data = await response.json()
-      setTodos(todos.map(todo => todo.id === data.id ? data : todo))
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour du todo:', error)
+      const updatedTodo = await TodoService.updateATodo(todoToUpdate);
+      setTodos(todos.map(todo => todo.id === updatedTodo.id ? updatedTodo : todo))
+    } catch (e) {
+      const error = e as TodoError;
+      console.error('Erreur lors de l update du todo:', error.message)
     }
   }
 
@@ -81,7 +75,6 @@ export default function TodoList() {
         />
         <Button onClick={createTodo}>Ajouter une tâche</Button>
       </div>
-      <Button>GEneric</Button>
       <div className="space-y-4">
         {todos.map(todo => (
           <TodoItem
