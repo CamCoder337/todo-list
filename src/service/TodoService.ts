@@ -1,6 +1,6 @@
 import {AxiosError} from "axios";
 import {Todo, TodoCreate} from "@/src/dto/todo.dtos";
-import {deleteATodoById, findAllTodos, findATodoById, saveATodo} from "@/src/action/todo.actions";
+import {deleteATodoById, findAllTodos, findATodoById, saveATodo, updateATodo} from "@/src/action/todo.actions";
 import {TodoError} from "@/src/exception/todo.exceptions";
 import {APIException} from "@/src/exception/api.exception";
 
@@ -38,8 +38,15 @@ export const  TodoService = {
         }
     },
 
-    updateATodo: async function(todo:Todo) : Promise<Todo> {
-        return await saveATodo(service_endpoint, todo);
+    updateATodo: async function(updatedTodo:Todo) : Promise<Todo> {
+        try{
+            return await updateATodo(service_endpoint, updatedTodo);
+        }catch (e){
+            if(e instanceof AxiosError){
+                throw e as APIException;
+            }
+            throw e as TodoError
+        }
     },
 
     async deleteATodo(todoId:string) : Promise<void> {
