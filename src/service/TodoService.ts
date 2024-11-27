@@ -43,7 +43,7 @@ export const  TodoService = {
 
     async deleteATodo(todoId:string) : Promise<void|TodoError> {
         try{
-            const todo = await deleteATodoById(service_endpoint, todoId);
+            await deleteATodoById(service_endpoint, todoId);
         }catch(e){
             if(e instanceof AxiosError){
                 return e as APIException;
