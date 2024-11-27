@@ -6,7 +6,7 @@ import { TodoItem } from '@/src/components/todo-item'
 import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
 import { Textarea } from "@/src/components/ui/textarea"
-import {TodoService} from "@/src/service/TodoService";
+import {TodoService} from "@/src/service/todo.service";
 import {TodoError} from "@/src/exception/todo.exceptions";
 import {toast} from "@/src/hooks/use-toast";
 
