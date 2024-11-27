@@ -8,8 +8,7 @@ const service_endpoint:string = process.env.api_url + "/v1/todos"
 export const  TodoService = {
     createATodo: async function(todo:TodoCreate) : Promise<Todo|TodoError> {
         try{
-            const createdTodo = await saveATodo(service_endpoint, todo)
-            return createdTodo;
+            return await saveATodo(service_endpoint, todo);
         }catch(e){
             if(e instanceof AxiosError){
                 return e as APIException;
@@ -20,8 +19,7 @@ export const  TodoService = {
 
     getAllTodos: async function(): Promise<Todo[]|TodoError> {
         try{
-            const todos = await findAllTodos(service_endpoint);
-            return  todos;
+            return  await findAllTodos(service_endpoint);
         }catch(e){
             if(e instanceof AxiosError){
                 return e as APIException;
@@ -31,8 +29,7 @@ export const  TodoService = {
     },
     getATodo: async function(todoId:string): Promise<Todo|TodoError> {
         try{
-            const todo = await findATodoById(service_endpoint,todoId);
-            return todo;
+            return await findATodoById(service_endpoint, todoId);
         }catch(e){
             if(e instanceof AxiosError){
                 return e as APIException;
