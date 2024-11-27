@@ -4,7 +4,7 @@ import {deleteATodoById, findAllTodos, findATodoById, saveATodo, updateATodo} fr
 import {TodoError} from "@/src/exception/todo.exceptions";
 import {APIException} from "@/src/exception/api.exception";
 
-const service_endpoint:string = process.env.api_url + "/v1/todos"
+const service_endpoint:string = process.env.API_URL + "/v1/todos"
 export const  TodoService = {
     createATodo: async function(todo:TodoCreate) : Promise<Todo> {
         try{
