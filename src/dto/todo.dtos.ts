@@ -10,5 +10,5 @@ export interface TodoCreate extends TodoBase {
 }
 
 export interface Todo extends TodoCreate {
-    id: number;
+    id: string;
 }
