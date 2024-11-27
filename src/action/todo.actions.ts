@@ -10,7 +10,7 @@ export async function saveATodo(endpoint: string, todo: TodoCreate): Promise<Tod
             return result.data as Todo;
         }).catch((error)=>{
             console.error(error);
-            throw new error;
+            throw error;
         });
     return response;
 }
@@ -22,7 +22,7 @@ export async function findAllTodos(endpoint: string): Promise<Todo[]> {
             return result.data as Todo[];
         }).catch((error)=>{
             console.error(error);
-            throw new error;
+            throw error;
         });
     return response;
 }
@@ -34,7 +34,7 @@ export async function findATodoById(endpoint: string,todoId:string): Promise<Tod
             return result.data as Todo;
         }).catch((error)=>{
             console.error(error);
-            throw new error;
+            throw error;
         });
     return response;
 }
@@ -46,7 +46,7 @@ export async function deleteATodoById(endpoint: string,todoId:string): Promise<T
             return result.data as Todo;
         }).catch((error)=>{
             console.error(error);
-            throw new error;
+            throw error;
         });
     return response;
 }
